@@ -1,4 +1,4 @@
 SequenceAlignment
 =================
 
-descripción
+descripción.
