@@ -26,22 +26,7 @@ matriz = crearMatriz (matriz, largoTextoMas1, largoPatronMas1);
 cargarPatronTexto(matriz, largoTextoMas1, largoPatronMas1, texto, patron);
 imprimirMatriz(matriz,largoTextoMas1,largoPatronMas1);
 marcarCoincidencias(matriz, largoTextoMas1, largoPatronMas1);
-
-/*
-// marcar las iguales con X
-for (var i=1; i<largoTextoMas1; i++){
-	var fila ="  ";
-	for (var j=1; j<largoPatronMas1; j++){
-		if ( matriz[i][0] === matriz[0][j] ){
-			matriz[i][j] ="X";
-		}
-		fila += matriz[i][j] + " ";
-	}
-}
-*/
-
 imprimirMatriz(matriz,largoTextoMas1,largoPatronMas1);
-
 
 
 //== recorrer matriz diagonal
@@ -51,13 +36,8 @@ var largoColumna=largoPatron;
 var recorreFila = largofila;
 var recorreColumna=0;
 
-
-
-
-
 var totalVeces=largofila*largoColumna;
 		
-
 console.log ("largo fila: " +largofila); 
 console.log ("largo columna: " +largoColumna); 
 console.log ("nro de veces: " + (largofila*largoColumna)); 
@@ -190,12 +170,12 @@ while (contVeces<=totalVeces){
 // f(x) marcar coincidencias con X
 function marcarCoincidencias(matrix, larTexto, larPatron){
 	for (var i=1; i<larTexto; i++){
-		var fila ="  ";
+		//var fila ="  ";
 		for (var j=1; j<larPatron; j++){
 			if ( matrix[i][0] === matrix[0][j] ){
 				matrix[i][j] ="X";
 			}
-			fila += matrix[i][j] + " ";
+		//	fila += matrix[i][j] + " ";
 		}
 	}
 }
@@ -217,8 +197,6 @@ function cargarPatronTexto(matrix, larTexto, larPatron, strTexto, strPatron){
 		//console.log("matriz: matriz["+i+"][0] / texto["+ (i-1) +"]");
 	}
 }
-
-
 
 // f(x) crear matriz 
 function crearMatriz (matrix, larTexto, larPatron){
