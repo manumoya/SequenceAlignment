@@ -1,0 +1,243 @@
+<html>
+<head>
+</head>
+<body>
+	
+<script language="javascript">
+
+// C T A C C - G 
+// - T A C A T G
+
+// var patron = "CTACCG";
+// var texto = "TACATG";
+
+var patron = "AGTGATG";
+var texto = "AGTGATA";
+//var texto = "AG";
+
+
+var largoPatron= patron.length;
+var largoTexto= texto.length;
+var largoPatronMas1 = largoPatron+1;
+var largoTextoMas1=  largoTexto+1;
+var matriz;
+
+matriz = crearMatriz (matriz, largoTextoMas1, largoPatronMas1);
+cargarPatronTexto(matriz, largoTextoMas1, largoPatronMas1, texto, patron);
+
+
+imprimirMatriz(matriz,largoTextoMas1,largoPatronMas1)
+
+
+// marcar las iguales con X
+for (var i=1; i<largoTextoMas1; i++){
+	var fila ="  ";
+	for (var j=1; j<largoPatronMas1; j++){
+		if ( matriz[i][0] === matriz[0][j] ){
+			matriz[i][j] ="X";
+		}
+		fila += matriz[i][j] + " ";
+	}
+}
+imprimirMatriz(matriz,largoTextoMas1,largoPatronMas1)
+
+
+
+//== recorrer matriz diagonal
+var largofila=largoTexto;
+var largoColumna=largoPatron;
+
+var recorreFila = largofila;
+var recorreColumna=0;
+
+
+
+
+
+var totalVeces=largofila*largoColumna;
+		
+
+console.log ("largo fila: " +largofila); 
+console.log ("largo columna: " +largoColumna); 
+console.log ("nro de veces: " + (largofila*largoColumna)); 
+var contVeces=0;
+var strImprimir="";
+var accion=""
+
+while (contVeces<=totalVeces){
+	
+	if (contVeces==0 ){
+		strImprimir = "diagonal 0: matriz["+recorreFila+"]["+recorreColumna+"] ";
+		console.log ( strImprimir + matriz[recorreFila][recorreColumna] + " ");
+		contVeces++;
+	}
+	
+	switch(accion){
+		/*
+		case "RETRFILA":
+			for (; recorreFila>=0 ;recorreFila--,recorreColumna--){
+				strImprimir = "RETRFILA: matriz["+recorreFila+"]["+recorreColumna+"] ";
+				console.log ( strImprimir + matriz[recorreFila][recorreColumna] + " ");
+				contVeces++;
+			}
+	  	  	recorreFila++,recorreColumna++;
+			contVeces--;
+			break;
+		case "AVANFILA":
+			for (; recorreFila<=largofila ; recorreFila++,recorreColumna++){
+				strImprimir = "AVANFILA: matriz["+recorreFila+"]["+recorreColumna+"] ";
+				console.log ( strImprimir + matriz[recorreFila][recorreColumna] + " ");
+				contVeces++;
+			}
+			recorreFila--,recorreColumna--;
+			contVeces--;
+	  	  	break;
+		*/
+		case "AVANCOL":
+			for (; recorreColumna<=largoColumna && recorreFila<=largofila; recorreFila++,recorreColumna++){
+				strImprimir = "AVANCOL: matriz["+recorreFila+"]["+recorreColumna+"] ";
+				console.log ( strImprimir + matriz[recorreFila][recorreColumna] + " ");
+				contVeces++;
+			}
+			recorreFila--,recorreColumna--;
+  	  		contVeces--;
+  	  	  	break;
+		case "RETRCOL":
+			for (; recorreColumna>=0 && recorreFila>=0  ;recorreFila--,recorreColumna--){
+				strImprimir = "RETRCOL: matriz["+recorreFila+"]["+recorreColumna+"] ";
+				console.log ( strImprimir + matriz[recorreFila][recorreColumna] + " ");
+				contVeces++;
+			}
+	  	  	recorreFila++,recorreColumna++;
+			contVeces--;
+	 		break;  
+	}
+		
+	
+	
+	
+	console.log ("veces: " +  contVeces);
+	
+	// identifica mov diagonal
+	
+	
+	console.log ("cond 1: " + (recorreColumna==0 && recorreFila>0));
+	console.log ("cond 2: " + (recorreColumna==largoColumna && recorreFila>0));
+	
+	
+	if ( (recorreColumna==0 && recorreFila>=0 ) || 
+		 (recorreColumna==largoColumna && recorreFila>0) ){
+		
+		if (recorreFila==0)
+			recorreColumna++;
+		else
+			recorreFila--;
+			 
+		
+		if (recorreColumna==largoColumna){
+			//accion="RETRFILA";
+			accion="RETRCOL";  
+			// retroceder hasta tope fila
+		}else{
+			//accion="AVANFILA"; 
+			accion="AVANCOL"; 
+			// avanzar hasta tope fila
+		}
+		
+	}else{
+		
+	/*
+		console.log ("cond 2: " + (recorreFila==largofila && recorreColumna<largoColumna));
+		console.log ("check 1: rf:"+ recorreFila +"=="+ largofila )
+		console.log ("check 2: rc:"+ recorreColumna + "<"+ largoColumna )
+	*/	
+		
+		if ( (recorreFila==largofila && recorreColumna<largoColumna) || 
+			 (recorreFila==0 && recorreColumna<largoColumna) ){
+			if (recorreColumna==largoColumna)
+				recorreFila--;
+			else	
+				recorreColumna++;
+				//}	 
+			
+			if (recorreFila==0){
+				accion="AVANCOL"; 
+				// avanzar tope columna  
+			}else{
+				accion="RETRCOL"; 
+				// retroceder tope columna 
+			}
+		}
+	}
+	
+	if ( recorreFila==0 && recorreColumna==largoColumna){
+		strImprimir = "diagonal final: matriz["+recorreFila+"]["+recorreColumna+"] ";
+		console.log ( strImprimir + matriz[recorreFila][recorreColumna] + " ");
+		contVeces++;
+	}
+	
+	console.log ("accion: " + accion + " pos: matrix["+ recorreFila +"]["+ recorreColumna +"]"); 
+	
+	
+	//contVeces++;
+	
+	
+
+}
+
+// f(x) cargar columa y fila 0 para patron y texto
+function cargarPatronTexto(matrix, larTexto, larPatron, strTexto, strPatron){
+	var indPatron=0 ;
+	for (var j=1; j<larPatron; j++){
+		//console.log("patron["+ i +"]: " + patron[i]);
+		matrix[0][j] = strPatron[indPatron];
+		indPatron++;
+		//columaPatron+= matriz[0][j] +" "  
+	}
+	var indTexto=0
+	for (var i=1; i<larTexto; i++){
+		//console.log("patron["+ i +"]: " + patron[i]);
+		matrix[i][0] = strTexto[indTexto];
+		indTexto++;
+		//console.log("matriz: matriz["+i+"][0] / texto["+ (i-1) +"]");
+	}
+}
+
+
+
+// f(x) crear matriz 
+function crearMatriz (matrix, larTexto, larPatron){
+	matrix=new Array(larTexto);
+	for (var i=0; i < larTexto; i++){
+		matrix[i]=new Array(larPatron);
+	}
+
+	for (var i=0; i<larTexto; i++){
+		for (var j=0; j<larPatron; j++){
+			matrix[i][j]="-";
+		}	
+	}
+	return matrix;
+	
+}
+
+// f(x) imprimir matriz 
+function imprimirMatriz(matrix,largoFila,largoColumna){
+	for (var i=0; i<largoFila; i++){
+		var fila ="";
+		for (var j=0; j<largoColumna; j++){
+			fila += matrix[i][j] + " ";
+		}
+		console.log("fila["+ i +"]: " + fila);	
+	}
+	console.log("=========");	
+}
+
+document.write("hola  script </br>");
+
+</script>	
+
+test hola
+
+</body>
+</html>
