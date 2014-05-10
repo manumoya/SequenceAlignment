@@ -54,128 +54,63 @@ while (contVeces<=totalVeces){
 	}
 	
 	switch(accion){
-		/*
-		case "RETRFILA":
-			for (; recorreFila>=0 ;recorreFila--,recorreColumna--){
-				strImprimir = "RETRFILA: matriz["+recorreFila+"]["+recorreColumna+"] ";
-				console.log ( strImprimir + matriz[recorreFila][recorreColumna] + " ");
-				contVeces++;
-			}
-	  	  	recorreFila++,recorreColumna++;
-			contVeces--;
-			break;
-		case "AVANFILA":
-			for (; recorreFila<=largofila ; recorreFila++,recorreColumna++){
-				strImprimir = "AVANFILA: matriz["+recorreFila+"]["+recorreColumna+"] ";
-				console.log ( strImprimir + matriz[recorreFila][recorreColumna] + " ");
-				contVeces++;
-			}
-			recorreFila--,recorreColumna--;
-			contVeces--;
-	  	  	break;
-		*/
 		case "AVANCOL":
 			for (; recorreColumna<=largoColumna && recorreFila<=largofila; recorreFila++,recorreColumna++){
 				strImprimir = "AVANCOL: matriz["+recorreFila+"]["+recorreColumna+"] ";
-				console.log ( strImprimir + matriz[recorreFila][recorreColumna] + " ");
 				contVeces++;
 			}
 			recorreFila--,recorreColumna--;
-  	  		contVeces--;
-  	  	  	break;
+  	  contVeces--; break;
 		case "RETRCOL":
 			for (; recorreColumna>=0 && recorreFila>=0  ;recorreFila--,recorreColumna--){
 				strImprimir = "RETRCOL: matriz["+recorreFila+"]["+recorreColumna+"] ";
-				console.log ( strImprimir + matriz[recorreFila][recorreColumna] + " ");
 				contVeces++;
 			}
-	  	  	recorreFila++,recorreColumna++;
-			contVeces--;
-	 		break;  
+	  	recorreFila++,recorreColumna++;
+			contVeces--; break;  
 	}
-		
-	
-	
-	
-	console.log ("veces: " +  contVeces);
 	
 	// identifica mov diagonal
-	
-	
-	console.log ("cond 1: " + (recorreColumna==0 && recorreFila>0));
-	console.log ("cond 2: " + (recorreColumna==largoColumna && recorreFila>0));
-	
-	
 	if ( (recorreColumna==0 && recorreFila>=0 ) || 
 		 (recorreColumna==largoColumna && recorreFila>0) ){
-		
 		if (recorreFila==0)
-			recorreColumna++;
+			recorreColumna++
 		else
 			recorreFila--;
 			 
-		
-		if (recorreColumna==largoColumna){
-			//accion="RETRFILA";
-			accion="RETRCOL";  
-			// retroceder hasta tope fila
-		}else{
-			//accion="AVANFILA"; 
+		if (recorreColumna==largoColumna)
+			accion="RETRCOL"
+		else
 			accion="AVANCOL"; 
-			// avanzar hasta tope fila
-		}
-		
+	
 	}else{
-		
-	/*
-		console.log ("cond 2: " + (recorreFila==largofila && recorreColumna<largoColumna));
-		console.log ("check 1: rf:"+ recorreFila +"=="+ largofila )
-		console.log ("check 2: rc:"+ recorreColumna + "<"+ largoColumna )
-	*/	
-		
-		if ( (recorreFila==largofila && recorreColumna<largoColumna) || 
-			 (recorreFila==0 && recorreColumna<largoColumna) ){
+		if ( (recorreFila==largofila && recorreColumna<largoColumna) || (recorreFila==0 && recorreColumna<largoColumna) ){
 			if (recorreColumna==largoColumna)
-				recorreFila--;
+				recorreFila--
 			else	
 				recorreColumna++;
-				//}	 
 			
-			if (recorreFila==0){
-				accion="AVANCOL"; 
-				// avanzar tope columna  
-			}else{
+			if (recorreFila==0)
+				accion="AVANCOL" 
+			else
 				accion="RETRCOL"; 
-				// retroceder tope columna 
-			}
 		}
 	}
 	
 	if ( recorreFila==0 && recorreColumna==largoColumna){
 		strImprimir = "diagonal final: matriz["+recorreFila+"]["+recorreColumna+"] ";
-		console.log ( strImprimir + matriz[recorreFila][recorreColumna] + " ");
 		contVeces++;
 	}
-	
-	console.log ("accion: " + accion + " pos: matrix["+ recorreFila +"]["+ recorreColumna +"]"); 
-	
-	
-	//contVeces++;
-	
-	
-
 }
 
 
 // f(x) marcar coincidencias con X
 function marcarCoincidencias(matrix, larTexto, larPatron){
 	for (var i=1; i<larTexto; i++){
-		//var fila ="  ";
 		for (var j=1; j<larPatron; j++){
 			if ( matrix[i][0] === matrix[0][j] ){
 				matrix[i][j] ="X";
 			}
-		//	fila += matrix[i][j] + " ";
 		}
 	}
 }
@@ -184,17 +119,13 @@ function marcarCoincidencias(matrix, larTexto, larPatron){
 function cargarPatronTexto(matrix, larTexto, larPatron, strTexto, strPatron){
 	var indPatron=0 ;
 	for (var j=1; j<larPatron; j++){
-		//console.log("patron["+ i +"]: " + patron[i]);
 		matrix[0][j] = strPatron[indPatron];
 		indPatron++;
-		//columaPatron+= matriz[0][j] +" "  
 	}
 	var indTexto=0
 	for (var i=1; i<larTexto; i++){
-		//console.log("patron["+ i +"]: " + patron[i]);
 		matrix[i][0] = strTexto[indTexto];
 		indTexto++;
-		//console.log("matriz: matriz["+i+"][0] / texto["+ (i-1) +"]");
 	}
 }
 
@@ -207,11 +138,10 @@ function crearMatriz (matrix, larTexto, larPatron){
 
 	for (var i=0; i<larTexto; i++){
 		for (var j=0; j<larPatron; j++){
-			matrix[i][j]="&nbsp;-&nbsp;";
+			matrix[i][j]="-";
 		}	
 	}
 	return matrix;
-	
 }
 
 // f(x) imprimir matriz 
@@ -219,9 +149,9 @@ function imprimirMatriz(matrix,largoFila,largoColumna){
 	for (var i=0; i<largoFila; i++){
 		var fila ="";
 		for (var j=0; j<largoColumna; j++){
-			fila += matrix[i][j] + "&nbsp;";
+			fila += matrix[i][j] + " ";
 		}
-		document.write("fila["+ i +"]: " + fila +"&nbsp;&nbsp;&nbsp;<br>");	
+		document.write("fila["+ i +"]: " + fila +" <br>");	
 		console.log("fila["+ i +"]: " + fila +" ");	
 	}
 	document.write("====================<br>");	
