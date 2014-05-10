@@ -11,8 +11,8 @@
 // var patron = "CTACCG";
 //var texto = "TACATG";
 
-//var patron = "AGTGATG";
-//var texto = "AGTGATA";
+var patron = "AGTGATG";
+var texto = "AGTGATA";
 //var texto = "AG";
 
 
@@ -207,7 +207,7 @@ function crearMatriz (matrix, larTexto, larPatron){
 
 	for (var i=0; i<larTexto; i++){
 		for (var j=0; j<larPatron; j++){
-			matrix[i][j]="-";
+			matrix[i][j]="&nbsp;-&nbsp;";
 		}	
 	}
 	return matrix;
@@ -219,18 +219,18 @@ function imprimirMatriz(matrix,largoFila,largoColumna){
 	for (var i=0; i<largoFila; i++){
 		var fila ="";
 		for (var j=0; j<largoColumna; j++){
-			fila += matrix[i][j] + " ";
+			fila += matrix[i][j] + "&nbsp;";
 		}
-		console.log("fila["+ i +"]: " + fila);	
+		document.write("fila["+ i +"]: " + fila +"&nbsp;&nbsp;&nbsp;<br>");	
+		console.log("fila["+ i +"]: " + fila +" ");	
 	}
-	console.log("=========");	
+	document.write("====================<br>");	
+	console.log("====================");
 }
-
-document.write("hola  script </br>");
 
 </script>	
 
-test hola
+
 
 </body>
 </html>
