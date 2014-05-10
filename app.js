@@ -1,0 +1,149 @@
+// C T A C C - G 
+// - T A C A T G
+
+//# ADN Sospechosos
+//var texto = "AAATGC"; /
+//var texto = "AGGAA";
+var texto = "AGTGATA"; // culpable
+//var texto = "GATTACA";
+var patron = "AGTGATG";
+
+
+
+var largoPatron= patron.length;
+var largoTexto= texto.length;
+var largoPatronMas1 = largoPatron+1;
+var largoTextoMas1=  largoTexto+1;
+var matriz;
+
+matriz = crearMatriz (matriz, largoTextoMas1, largoPatronMas1);
+cargarPatronTexto(matriz, largoTextoMas1, largoPatronMas1, texto, patron);
+imprimirMatriz(matriz,largoTextoMas1,largoPatronMas1);
+marcarCoincidencias(matriz, largoTextoMas1, largoPatronMas1);
+imprimirMatriz(matriz,largoTextoMas1,largoPatronMas1);
+
+
+//== recorrer matriz diagonal
+var largofila=largoTexto;
+var largoColumna=largoPatron;
+var recorreFila = largofila;
+var recorreColumna=0;
+var totalVeces=largofila*largoColumna;
+var contVeces=0;
+var strImprimir="";
+var accion=""
+
+while (contVeces<=totalVeces){
+	
+	if (contVeces==0 ){
+		strImprimir = "diagonal 0: matriz["+recorreFila+"]["+recorreColumna+"] ";
+		//console.log ( strImprimir + matriz[recorreFila][recorreColumna] + " ");
+		contVeces++;
+	}
+	
+	switch(accion){
+		case "AVANCOL":
+			for (; recorreColumna<=largoColumna && recorreFila<=largofila; recorreFila++,recorreColumna++){
+				strImprimir = "AVANCOL: matriz["+recorreFila+"]["+recorreColumna+"] ";
+				//console.log ( strImprimir + matriz[recorreFila][recorreColumna] + " ");
+				contVeces++;
+			}
+			recorreFila--,recorreColumna--;
+  	  contVeces--; break;
+		case "RETRCOL":
+			for (; recorreColumna>=0 && recorreFila>=0  ;recorreFila--,recorreColumna--){
+				strImprimir = "RETRCOL: matriz["+recorreFila+"]["+recorreColumna+"] ";
+				//console.log ( strImprimir + matriz[recorreFila][recorreColumna] + " ");
+				contVeces++;
+			}
+	  	recorreFila++,recorreColumna++;
+			contVeces--; break;  
+	}
+	
+	//console.log ("veces: " +  contVeces);
+	
+	// identifica mov diagonal
+	if ( (recorreColumna==0 && recorreFila>=0 ) || 
+		 (recorreColumna==largoColumna && recorreFila>0) ){
+		if (recorreFila==0)
+			recorreColumna++
+		else
+			recorreFila--;
+			 
+		if (recorreColumna==largoColumna)
+			accion="RETRCOL"
+		else
+			accion="AVANCOL"; 
+	
+	}else{
+		if ( (recorreFila==largofila && recorreColumna<largoColumna) || (recorreFila==0 && recorreColumna<largoColumna) ){
+			if (recorreColumna==largoColumna)
+				recorreFila--
+			else	
+				recorreColumna++;
+			
+			if (recorreFila==0)
+				accion="AVANCOL" 
+			else
+				accion="RETRCOL"; 
+		}
+	}
+	
+	if ( recorreFila==0 && recorreColumna==largoColumna){
+		strImprimir = "diagonal final: matriz["+recorreFila+"]["+recorreColumna+"] ";
+		//console.log ( strImprimir + matriz[recorreFila][recorreColumna] + " ");
+		contVeces++;
+	}
+}
+
+// f(x) marcar coincidencias con X
+function marcarCoincidencias(matrix, larTexto, larPatron){
+	for (var i=1; i<larTexto; i++){
+		for (var j=1; j<larPatron; j++){
+			if ( matrix[i][0] === matrix[0][j] ){
+				matrix[i][j] ="X";
+			}
+		}
+	}
+}
+
+// f(x) cargar columa y fila 0 para patron y texto
+function cargarPatronTexto(matrix, larTexto, larPatron, strTexto, strPatron){
+	var indPatron=0 ;
+	for (var j=1; j<larPatron; j++){
+		matrix[0][j] = strPatron[indPatron];
+		indPatron++;
+	}
+	var indTexto=0
+	for (var i=1; i<larTexto; i++){
+		matrix[i][0] = strTexto[indTexto];
+		indTexto++;
+	}
+}
+
+// f(x) crear matriz 
+function crearMatriz (matrix, larTexto, larPatron){
+	matrix=new Array(larTexto);
+	for (var i=0; i < larTexto; i++){
+		matrix[i]=new Array(larPatron);
+	}
+
+	for (var i=0; i<larTexto; i++){
+		for (var j=0; j<larPatron; j++){
+			matrix[i][j]="-";
+		}	
+	}
+	return matrix;
+}
+
+// f(x) imprimir matriz 
+function imprimirMatriz(matrix,largoFila,largoColumna){
+	for (var i=0; i<largoFila; i++){
+		var fila ="";
+		for (var j=0; j<largoColumna; j++){
+			fila += matrix[i][j] + " ";
+		}
+		console.log("fila["+ i +"]: " + fila +" ");	
+	}
+	console.log("====================");
+}
